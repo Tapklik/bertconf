@@ -78,7 +78,7 @@ store([]) -> [];
 store([[]|Tables]) -> % some file not respecting the format got skipped
     store(Tables);
 store([{NameSpace, Records} | Tables]) ->
-    Tid = ets:new(NameSpace, [set, public, {read_concurrency, true}]),
+    Tid = ets:new(NameSpace, [named_table, set, public, {read_concurrency, true}]),
     ets:insert(Tid, Records),
     [#tab{name=NameSpace, id=Tid} | store(Tables)].
 
